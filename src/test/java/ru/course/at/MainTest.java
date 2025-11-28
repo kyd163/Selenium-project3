@@ -2,6 +2,7 @@ package ru.course.at;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +33,7 @@ public class MainTest {
     }
 
     @Test
+    @DisplayName("Отображение значения в поисковой строке")
     public void search() {
         String input = "В контакте";
         WebElement searchField = driver.findElement(By.cssSelector("#sb_form_q"));
