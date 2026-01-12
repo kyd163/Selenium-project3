@@ -11,8 +11,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MainTest {
     private WebDriver driver;
@@ -24,7 +26,7 @@ public class MainTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://www.bing.com/");
+        //driver.get("https://habr.com/ru/feed/");
     }
 
     @AfterEach
@@ -33,17 +35,24 @@ public class MainTest {
     }
 
     @Test
-    @DisplayName("Отображение значения в поисковой строке")
-    public void search() {
-        String input = "В контакте";
-        WebElement searchField = driver.findElement(By.cssSelector("#sb_form_q"));
-        searchField.sendKeys(input);
+    @DisplayName("Отображение статьи Компании")
+    public void articles() {
+        WebElement articlesButton = driver.findElement(By.cssSelector("a[class=footer-menu__item-link]"));
+        articlesButton.click();
 
-        WebElement submitButton = driver.findElement(By.cssSelector("#search_icon > svg"));
-        submitButton.click();
-
-        WebElement searchPageField = driver.findElement(By.cssSelector("#sb_form_q"));
-        assertEquals(input, searchPageField.getAttribute("value"));
+        assertTrue(driver.findElement(By.xpath("//*[contains(text(), Компании)]")).isDisplayed(),
+                "Статья Компании не найдена");
     }
+
+    @Test
+    @DisplayName("Изменение иконки Бургера, на Крестик")
+    public void burger(){
+        WebElement burgerButton = driver.findElement(By.cssSelector("button.tm-header__button"));
+        burgerButton.click();
+
+        assertTrue(driver.findElement(By.cssSelector("button[aria-expanded=true]")).isDisplayed(),
+                "Кнопка Крестика не найдена");
+    }
+
 }
 
