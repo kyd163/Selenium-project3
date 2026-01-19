@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,31 +37,44 @@ public class ListTest {
 
     @Test
     public void search() {
-
-        String input = "Selenium.dev";
-        String searchurl = "https://www.selenium.dev/";
-        WebElement seacrhField = driver.findElement(By.cssSelector("input[class=\"sb_form_q\"]"));
-        seacrhField.sendKeys(input);
-
-        WebElement buttonField = driver.findElement(By.cssSelector("svg[class=\"search_svg\"]"));
-        buttonField.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
-        wait.until(ExpectedConditions.and(
-                ExpectedConditions.attributeContains(By.cssSelector("h2 > a[href]"), "href", "selenium"),
-                ExpectedConditions.elementToBeClickable(By.cssSelector("h2 > a[href]"))
-        ));
-        List results = driver.findElements(By.cssSelector("h2 > a[href]"));
-
-        assertEquals(searchurl, driver.getCurrentUrl(), "Открылась не верная вкладка");
-
-        List<WebElement> result = driver.findElements(By.cssSelector("a[class=\"Selenium\"]"));
-        clickElement(result, 0);
-        driver.getCurrentUrl();
+        searchInput();
+        expectations();
+        elementsPage();
+        checkUrl();
 
     }
 
-    public void clickElement(List<WebElement> results, int num) {
-        results.get(0).click();
+    public void searchInput() {
+        String input = "Selenium";
+        WebElement searchField = driver.findElement(By.cssSelector("input[class=\"sb_form_q\"]"));
+        searchField.sendKeys(input);
+        searchField.submit();
+    }
+
+    public void expectations(){
+        String locator = "a[ h=\"ID=SERP,5165.2\"]";
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), "selenium"),
+                ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
+        ));
+
+    }
+
+    public void elementsPage(){
+        String locator = "a[contains(@class, 'tilk')][contains(@href, 'selenium.dev')]";
+        List<WebElement> results = driver.findElements(By.cssSelector(locator));
+        clickElement(results,0);
+    }
+
+    public void clickElement(List<WebElement> results, int num){
+        results.get(num).click();
+        System.out.println("Произведён клик по" + num );
+    }
+
+    public void checkUrl(){
+        String seleniumUrl = "https://www.selenium.dev/ ";
+        String url = driver.getCurrentUrl();
+        assertEquals( seleniumUrl, url,"Не открылась нужная вкладка");
     }
 }
