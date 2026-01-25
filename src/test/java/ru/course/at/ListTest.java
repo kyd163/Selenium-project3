@@ -27,7 +27,7 @@ public class ListTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://www.bing.com/");
+        driver.get("https://duckduckgo.com/");
     }
 
     @AfterEach
@@ -38,21 +38,21 @@ public class ListTest {
     @Test
     public void search() {
         searchInput();
-        expectations();
-        elementsPage();
-        checkUrl();
+        expectationsDownloadsPage();
+        clickFirstSeleniumResult();
+        checkSeleniumUrl();
 
     }
 
     public void searchInput() {
         String input = "Selenium";
-        WebElement searchField = driver.findElement(By.cssSelector("input[class=\"sb_form_q\"]"));
+        WebElement searchField = driver.findElement(By.cssSelector("input[id=\"searchbox_input\"]"));
         searchField.sendKeys(input);
         searchField.submit();
     }
 
-    public void expectations(){
-        String locator = "a[ h=\"ID=SERP,5165.2\"]";
+    public void expectationsDownloadsPage(){
+        String locator = "a[target=_self]";
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
         wait.until(ExpectedConditions.and(
                 ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), "selenium"),
@@ -61,8 +61,8 @@ public class ListTest {
 
     }
 
-    public void elementsPage(){
-        String locator = "a[contains(@class, 'tilk')][contains(@href, 'selenium.dev')]";
+    public void clickFirstSeleniumResult(){
+        String locator = "span[class=\"EKtkFWMYpwzMKOYr0GYm LQVY1Jpkk8nyJ6HBWKAk\"]";
         List<WebElement> results = driver.findElements(By.cssSelector(locator));
         clickElement(results,0);
     }
@@ -72,9 +72,9 @@ public class ListTest {
         System.out.println("Произведён клик по" + num );
     }
 
-    public void checkUrl(){
+    public void checkSeleniumUrl(){
         String seleniumUrl = "https://www.selenium.dev/ ";
         String url = driver.getCurrentUrl();
-        assertEquals( seleniumUrl, url,"Не открылась нужная вкладка");
+        assertEquals( seleniumUrl, url,"Открылась нужная вкладка");
     }
 }
