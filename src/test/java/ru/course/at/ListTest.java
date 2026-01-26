@@ -38,7 +38,7 @@ public class ListTest {
     @Test
     public void search() {
         searchInput();
-        expectationsDownloadsPage();
+        expectationsDownloadPage();
         clickFirstSeleniumResult();
         checkSeleniumUrl();
 
@@ -51,7 +51,7 @@ public class ListTest {
         searchField.submit();
     }
 
-    public void expectationsDownloadsPage(){
+    public void expectationsDownloadPage(){
         String locator = "a[target=_self]";
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
         wait.until(ExpectedConditions.and(
