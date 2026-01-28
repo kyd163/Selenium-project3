@@ -41,7 +41,6 @@ public class ListTest {
         expectationsDownloadPage();
         clickFirstSeleniumResult();
         checkSeleniumUrl();
-
     }
 
     public void searchInput() {
@@ -51,30 +50,29 @@ public class ListTest {
         searchField.submit();
     }
 
-    public void expectationsDownloadPage(){
+    public void expectationsDownloadPage() {
         String locator = "a[target=_self]";
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
         wait.until(ExpectedConditions.and(
                 ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), "selenium"),
                 ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
         ));
-
     }
 
-    public void clickFirstSeleniumResult(){
-        String locator = "span[class=\"EKtkFWMYpwzMKOYr0GYm LQVY1Jpkk8nyJ6HBWKAk\"]";
+    public void clickFirstSeleniumResult() {
+        String locator = "a[target=_self]";
         List<WebElement> results = driver.findElements(By.cssSelector(locator));
-        clickElement(results,0);
+        clickElement(results, 0);
     }
 
-    public void clickElement(List<WebElement> results, int num){
+    public void clickElement(List<WebElement> results, int num) {
         results.get(num).click();
-        System.out.println("Произведён клик по" + num );
+        System.out.println("Произведён клик по" + num);
     }
 
-    public void checkSeleniumUrl(){
-        String seleniumUrl = "https://www.selenium.dev/ ";
+    public void checkSeleniumUrl() {
+        String seleniumUrl = "https://www.selenium.dev/";
         String url = driver.getCurrentUrl();
-        assertEquals( seleniumUrl, url,"Открылась нужная вкладка");
+        assertEquals(seleniumUrl, url, "Открылась нужная вкладка");
     }
 }
