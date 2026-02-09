@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.course.at.pages.SearchPage;
 
 import java.time.Duration;
 import java.util.List;
@@ -37,18 +38,23 @@ public class ListTest {
 
     @Test
     public void search() {
-        searchInput();
+        String input = "Selenium";
+        SearchPage sp = new SearchPage(driver);
+        sp.sendText(input);
+
+//        searchInput();
+
         expectationsDownloadPage();
         clickFirstSeleniumResult();
         checkSeleniumUrl();
     }
 
-    public void searchInput() {
-        String input = "Selenium";
-        WebElement searchField = driver.findElement(By.cssSelector("input[id=\"searchbox_input\"]"));
-        searchField.sendKeys(input);
-        searchField.submit();
-    }
+//    public void searchInput() {
+//        String input = "Selenium";
+//        WebElement searchField = driver.findElement(By.cssSelector("input[id=\"searchbox_input\"]"));
+//        searchField.sendKeys(input);
+//        searchField.submit();
+//    }
 
     public void expectationsDownloadPage() {
         String locator = "a[target=_self]";
