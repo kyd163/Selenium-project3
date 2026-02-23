@@ -14,31 +14,34 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ResultsPage {
+    private final WebDriver driver;
     String locator = "a[target=_self]";
     String seleniumUrl = "https://www.selenium.dev/";
 
-    @FindBy(css = "a[target=_self]")
-    private WebElement results;
 
     public ResultsPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
-    public void waitDownloadPage(WebDriver driver, String text) {
+    public void waitDownloadPage(String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-        wait.until (ExpectedConditions.and(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), text),
+        wait.until(ExpectedConditions.and(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), text),
                 ExpectedConditions.elementToBeClickable(By.cssSelector(locator))));
     }
-    public void clickSeleniumResults(WebDriver driver){
+
+    public void clickSeleniumResults() {
         List<WebElement> results = driver.findElements(By.cssSelector(locator));
-        clickListElement(results,0);
+        clickListElement(results, 0);
     }
-    public void clickListElement(List<WebElement> results,int num){
+
+    public void clickListElement(List<WebElement> results, int num) {
         results.get(num).click();
         System.out.println("Произведён клик по" + num);
     }
-    public void checkUrl(WebDriver driver){
+
+    public void checkUrl() {
         String url = driver.getCurrentUrl();
-        assertEquals(seleniumUrl,url,"Открылась нужная вкладка");
+        assertEquals(seleniumUrl, url, "Открылась неверная вкладка");
     }
 }

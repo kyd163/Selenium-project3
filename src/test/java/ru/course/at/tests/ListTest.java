@@ -43,16 +43,15 @@ public class ListTest {
     }
 
     public void searchInput() {
-        String input = "Selenium";
         mp.sendText(input);
     }
 
     public void expectationsDownloadPage() {
-        rp.waitDownloadPage(driver, input);
+        rp.waitDownloadPage(input);
     }
 
     public void clickFirstSeleniumResult() {
         rp.clickSeleniumResults();
-        rp.checkUrl(driver);
+        rp.checkUrl();
     }
 }
