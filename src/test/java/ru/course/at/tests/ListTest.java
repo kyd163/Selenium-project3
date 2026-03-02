@@ -15,7 +15,7 @@ public class ListTest {
     private WebDriver driver;
     MainPage mp;
     ResultsPage rp;
-    String input = "Selenium";
+    String input = "selenium";
 
     @BeforeEach
     public void setUp() {

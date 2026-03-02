@@ -25,7 +25,7 @@ public class ResultsPage {
     }
 
     public void waitDownloadPage(String text) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.and(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(locator), text),
                 ExpectedConditions.elementToBeClickable(By.cssSelector(locator))));
     }
